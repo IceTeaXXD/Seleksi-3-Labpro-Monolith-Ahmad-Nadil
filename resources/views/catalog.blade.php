@@ -1,6 +1,5 @@
 @include('navbar')
-<h1><span class="yellow">Items Catalog</pan>
-</h1>
+<h1><span class="yellow">CATALOG</span></h1>
 <style>
     @charset "UTF-8";
     @import url(https://fonts.googleapis.com/css?family=Poppins:300);
@@ -128,7 +127,51 @@
         transition-property: all;
         transition-timing-function: line;
     }
+
+    /* Previous and Next links */
+    .pagination a {
+        color: #FFF;
+        padding: 8px 16px;
+        text-decoration: none;
+        background-color: #333;
+        border-radius: 5px;
+        margin: 2px;
+    }
+
+    /* Current active page */
+    .pagination a.active {
+        background-color: #4CAF50;
+    }
+
+    /* Hover effect */
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+
+    /* Center the pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination-form {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
 </style>
+<div class="pagination-form">
+    <form method="get">
+        <label for="itemsPerPage">Items Per Page:</label>
+        <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
+            <option value="5" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '5') echo 'selected'; ?>>5</option>
+            <option value="10" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '10') echo 'selected'; ?>>10</option>
+            <option value="15" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '15') echo 'selected'; ?>>15</option>
+            <option value="20" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '20') echo 'selected'; ?>>20</option>
+        </select>
+    </form>
+</div>
 <table class="container">
     <thead>
         <tr>
@@ -148,9 +191,17 @@
     </thead>
     <tbody>
         <?php
+        // Define the default number of items per page and the maximum items per page
+        $defaultItemsPerPage = 5;
+        $maxItemsPerPage = 20;
+
+        // Get the number of items to show per page from the query string
+        $itemsPerPage = isset($_GET['itemsPerPage']) ? intval($_GET['itemsPerPage']) : $defaultItemsPerPage;
+
+        // Ensure the itemsPerPage value is within the allowed range
+        $itemsPerPage = min(max($itemsPerPage, 1), $maxItemsPerPage);
 
         $url = 'https://single-service-production.up.railway.app/barang';
-
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -164,21 +215,46 @@
         if ($response_data['status'] === "success") {
             // display the data
             $items = $response_data['data'];
-            foreach ($items as $item) {
+
+            // Get the current page number from the query string
+            $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+            // Calculate the total number of items and pages
+            $totalItems = count($items);
+            $totalPages = ceil($totalItems / $itemsPerPage);
+
+            // Adjust the current page number if it exceeds the total number of pages
+            if ($currentPage > $totalPages) {
+                $currentPage = $totalPages;
+            }
+
+            // Calculate the starting index and ending index of items for the current page
+            $startIndex = ($currentPage - 1) * $itemsPerPage;
+            $endIndex = min($startIndex + $itemsPerPage, $totalItems);
+
+            for ($i = $startIndex; $i < $endIndex; $i++) {
+                $item = $items[$i];
                 echo "<tr>";
                 echo "<td>" . $item['nama'] . "</td>";
                 echo "<td>Rp" . $item['harga'] . "</td>";
                 echo "<td>" . $item['stok'] . "</td>";
-                // echo "<td><a href='purchase.php?item_id=" . $item['id'] . "' class='buy-button'>Beli Barang</a></td>";
                 echo "<td><a href='purchase.php?item_id=" . $item['id'] . "'><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>Beli Barang</button></td>";
                 echo "</tr>";
             }
             echo "</tbody>";
             echo "</table>";
+
+            // Pagination links
+            echo "<div class='pagination'>";
+            for ($page = 1; $page <= $totalPages; $page++) {
+                $isActive = ($page == $currentPage) ? 'active' : '';
+                echo "<a href='?page=" . $page . "&itemsPerPage=" . $itemsPerPage . "' class='" . $isActive . "'>" . $page . "</a>";
+            }
+            echo "</div>";
         } else {
             echo "Error retrieving data.";
         }
-
         ?>
+
     </tbody>
 </table>

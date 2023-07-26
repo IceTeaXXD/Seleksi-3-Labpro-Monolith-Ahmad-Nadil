@@ -1,4 +1,5 @@
 @include ('navbar')
+<title>Sign In</title>
 <!DOCTYPE html>
 <style>
     @import url(https://fonts.googleapis.com/css?family=Poppins:300);

@@ -1,4 +1,5 @@
 @include('navbar')
+<title>Catalog</title>
 <h1><span class="yellow">CATALOG</span></h1>
 <style>
     @charset "UTF-8";

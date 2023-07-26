@@ -1,5 +1,5 @@
 @include('navbar')
-<h1><span class="yellow">CATALOG</span></h1>
+<h1><span class="yellow">PURCHASE HISTORY</span></h1>
 <style>
     @charset "UTF-8";
     @import url(https://fonts.googleapis.com/css?family=Poppins:300);

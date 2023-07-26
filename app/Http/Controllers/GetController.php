@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\History;
 use Illuminate\Http\Request;
 
-class Controller extends BaseController
+class GetController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
     public function getUser($id)
@@ -19,37 +19,9 @@ class Controller extends BaseController
         return response()->json($user);
     }
 
-    public function postUser(Request $request)
-    {
-        $user = new User;
-
-        $user->username = $request->input('username');
-        $user->password = $request->input('password');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-
-        $user->save();
-
-        return response()->json($user);
-    }
-
     public function getHistory($id)
     {
         $history = History::find($id);
-
-        return response()->json($history);
-    }
-
-    public function postHistory(Request $request)
-    {
-        $history = new History;
-
-        $history->username = $request->input('username');
-        $history->nama_barang = $request->input('nama_barang');
-        $history->jumlah_barang = $request->input('jumlah_barang');
-        $history->total_harga = $request->input('total_harga');
-
-        $history->save();
 
         return response()->json($history);
     }

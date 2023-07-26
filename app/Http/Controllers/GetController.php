@@ -19,9 +19,10 @@ class GetController extends BaseController
         return response()->json($user);
     }
 
-    public function getHistory($id)
+    public function getHistory()
     {
-        $history = History::find($id);
+        $username = session('username');
+        $history = History::where('username', $username)->get();
 
         return response()->json($history);
     }

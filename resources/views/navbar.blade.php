@@ -46,7 +46,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="/">Home</a></li>
                             <li><a href="/catalog">Catalog</a></li>
-                            <li><a href="#">Purchase History</a></li>
+                            <li><a href="/history">Purchase History</a></li>
                             <li><a href="/logout">Sign Out</a></li>
                         </ul>
                     </div>

@@ -35,14 +35,13 @@ Route::get('/purchase', function () {
     return view('purchase');
 });
 
+Route::get('/history', function () {
+    return view('history');
+});
+
 Route::get(
     '/users',
     'App\Http\Controllers\GetController@getAllUser'
-);
-
-Route::get(
-    '/history',
-    'App\Http\Controllers\GetController@getAllHistory'
 );
 
 Route::get(

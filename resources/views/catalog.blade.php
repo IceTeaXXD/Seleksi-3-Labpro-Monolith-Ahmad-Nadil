@@ -238,7 +238,7 @@
                 echo "<td>" . $item['nama'] . "</td>";
                 echo "<td>Rp" . $item['harga'] . "</td>";
                 echo "<td>" . $item['stok'] . "</td>";
-                echo "<td><a href='purchase.php?item_id=" . $item['id'] . "'><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>Beli Barang</button></td>";
+                echo "<td><a href='purchase?item_id=" . $item['id'] . "'><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter'>Beli Barang</button></td>";
                 echo "</tr>";
             }
             echo "</tbody>";

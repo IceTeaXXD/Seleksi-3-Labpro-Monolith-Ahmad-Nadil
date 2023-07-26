@@ -31,9 +31,18 @@ Route::get('/catalog', function () {
     return view('catalog');
 });
 
+Route::get('/purchase', function () {
+    return view('purchase');
+});
+
 Route::get(
     '/users',
     'App\Http\Controllers\GetController@getAllUser'
+);
+
+Route::get(
+    '/history',
+    'App\Http\Controllers\GetController@getAllHistory'
 );
 
 Route::post(
@@ -46,7 +55,7 @@ Route::post(
     'App\Http\Controllers\PostController@postLogin'
 );
 
-Route::get(
-    '/history',
-    'App\Http\Controllers\GetController@getAllHistory'
+Route::post(
+    '/process_purchase',
+    'App\Http\Controllers\PostController@postPurchase'
 );

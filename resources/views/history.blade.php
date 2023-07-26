@@ -182,7 +182,7 @@
                 <h1>JUMLAH BARANG</h1>
             </th>
             <th>
-                <h1>TOTAL BARANG</h1>
+                <h1>TOTAL HARGA</h1>
             </th>
             <th>
                 <h1>TANNGAL PEMBELIAN</h1>
@@ -191,38 +191,57 @@
     </thead>
     <tbody>
         <?php
+
         use App\Models\History;
-        
-        // find history based on session's username
+        // Define the default number of items per page and the maximum items per page
+        $defaultItemsPerPage = 5;
+        $maxItemsPerPage = 20;
+
+        // Get the number of items to show per page from the query string
+        $itemsPerPage = isset($_GET['itemsPerPage']) ? intval($_GET['itemsPerPage']) : $defaultItemsPerPage;
+
+        // Ensure the itemsPerPage value is within the allowed range
+        $itemsPerPage = min(max($itemsPerPage, 1), $maxItemsPerPage);
+
         $username = session('username');
         $history = History::where('username', $username)->get();
 
-        // pagination
-        $itemsPerPage = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 5;
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-
-        $offset = ($page - 1) * $itemsPerPage;
-        $totalItems = count($history);
+        
+        $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+        $totalItems = History::where('username', $username)->count();
         $totalPages = ceil($totalItems / $itemsPerPage);
 
-        $history = History::where('username', $username)->offset($offset)->limit($itemsPerPage)->get();
+        // Adjust the current page number if it exceeds the total number of pages
+        if ($currentPage > $totalPages) {
+            $currentPage = $totalPages;
+        }
+
+        // Calculate the starting index and ending index of items for the current page
+        $startIndex = ($currentPage - 1) * $itemsPerPage;
+        $endIndex = min($startIndex + $itemsPerPage, $totalItems);
+
+        // Loop through the items on this page
+        for ($i = $startIndex; $i < $endIndex; $i++) {
+            $item = $history[$i];
+            echo "<tr>";
+            echo "<td>" . $item->nama_barang . "</td>";
+            echo "<td>" . $item->jumlah_barang . "</td>";
+            echo "<td>" . $item->total_harga . "</td>";
+            echo "<td>" . $item->created_at . "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
+
+
+        // Pagination links
+        echo "<div class='pagination'>";
+        for ($page = 1; $page <= $totalPages; $page++) {
+            $isActive = ($page == $currentPage) ? 'active' : '';
+            echo "<a href='?page=" . $page . "&itemsPerPage=" . $itemsPerPage . "' class='" . $isActive . "'>" . $page . "</a>";
+        }
+        echo "</div>";
         ?>
-        @foreach($history as $history)
-        <tr>
-            <td>
-                <h2>{{ $history->nama_barang }}</h2>
-            </td>
-            <td>
-                <h2>{{ $history->jumlah_barang }}</h2>
-            </td>
-            <td>
-                <h2>{{ $history->total_barang }}</h2>
-            </td>
-            <td>
-                <h2>{{ $history->tanggal_pembelian }}</h2>
-            </td>
-        </tr>
-        @endforeach
 
     </tbody>
 </table>

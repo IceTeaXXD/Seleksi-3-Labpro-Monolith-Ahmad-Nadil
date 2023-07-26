@@ -19,13 +19,34 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login', function () {
+Route::get('/register', function () {
     return view('register');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
 
-Route::get('/users', 'App\Http\Controllers\Controller@getAllUser');
+Route::get('/catalog', function () {
+    return view('catalog');
+});
 
-Route::post('/process_register', 'App\Http\Controllers\Controller@postUser');
+Route::get(
+    '/users',
+    'App\Http\Controllers\GetController@getAllUser'
+);
 
-Route::get('/history', 'App\Http\Controllers\Controller@getAllHistory');
+Route::post(
+    '/process_register',
+    'App\Http\Controllers\PostController@postUser'
+);
+
+Route::post(
+    '/process_login',
+    'App\Http\Controllers\PostController@postLogin'
+);
+
+Route::get(
+    '/history',
+    'App\Http\Controllers\GetController@getAllHistory'
+);

@@ -171,34 +171,23 @@
     #search {
         border-radius: 5px;
         width: 300px;
-        height: 40px;
+        height: 35px;
         font-size: 16px;
         padding: 5px;
     }
 
     .search-form button {
-        height: 40px;
+        height: 35px;
         font-size: 16px;
         margin-left: 10px;
+        border-radius: 5px;
     }
 </style>
 <table class="container">
     <div class="search-form">
         <form method="get">
-            <label for="search">Search:</label>
-            <input type="text" name="search" id="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+            <input type="text" name="search" id="search" placeholder="Search for items..." value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
             <button type="submit">Search</button>
-        </form>
-    </div>
-    <div class="pagination-form">
-        <form method="get">
-            <label for="itemsPerPage">Items Per Page:</label>
-            <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
-                <option value="5" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '5') echo 'selected'; ?>>5</option>
-                <option value="10" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '10') echo 'selected'; ?>>10</option>
-                <option value="15" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '15') echo 'selected'; ?>>15</option>
-                <option value="20" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '20') echo 'selected'; ?>>20</option>
-            </select>
         </form>
     </div>
     <thead>
@@ -213,7 +202,17 @@
                 <h1>STOK</h1>
             </th>
             <th>
-                <h1>BELI</h1>
+                <div class="pagination-form">
+                    <form method="get">
+                        <label for="itemsPerPage">Items Per Page:</label>
+                        <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
+                            <option value="5" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '5') echo 'selected'; ?>>5</option>
+                            <option value="10" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '10') echo 'selected'; ?>>10</option>
+                            <option value="15" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '15') echo 'selected'; ?>>15</option>
+                            <option value="20" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '20') echo 'selected'; ?>>20</option>
+                        </select>
+                    </form>
+                </div>
             </th>
         </tr>
     </thead>

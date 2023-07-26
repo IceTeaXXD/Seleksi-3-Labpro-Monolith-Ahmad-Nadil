@@ -226,7 +226,7 @@
             echo "<tr>";
             echo "<td>" . $item->nama_barang . "</td>";
             echo "<td>" . $item->jumlah_barang . "</td>";
-            echo "<td>" . $item->total_harga . "</td>";
+            echo "<td>Rp" . $item->total_harga . "</td>";
             echo "<td>" . $item->created_at . "</td>";
             echo "</tr>";
         }

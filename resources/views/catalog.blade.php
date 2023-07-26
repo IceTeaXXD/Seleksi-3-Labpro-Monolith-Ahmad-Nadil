@@ -258,3 +258,15 @@
 
     </tbody>
 </table>
+<script>
+    // Function to refresh the content
+    function refreshContent() {
+        // Reload the page
+        location.reload();
+    }
+
+    const pollingInterval = 10000;
+
+    // Set the interval to refresh the content
+    setInterval(refreshContent, pollingInterval);
+</script>

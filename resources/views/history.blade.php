@@ -206,7 +206,7 @@
         $username = session('username');
         $history = History::where('username', $username)->get();
 
-        
+
         $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
         $totalItems = History::where('username', $username)->count();
         $totalPages = ceil($totalItems / $itemsPerPage);
@@ -245,3 +245,15 @@
 
     </tbody>
 </table>
+<script>
+    // Function to refresh the content
+    function refreshContent() {
+        // Reload the page
+        location.reload();
+    }
+
+    const pollingInterval = 10000;
+
+    // Set the interval to refresh the content
+    setInterval(refreshContent, pollingInterval);
+</script>

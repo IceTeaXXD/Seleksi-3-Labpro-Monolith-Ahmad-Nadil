@@ -160,19 +160,47 @@
         justify-content: center;
         margin-top: 20px;
     }
+
+    .search-form {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    #search {
+        border-radius: 5px;
+        width: 300px;
+        height: 40px;
+        font-size: 16px;
+        padding: 5px;
+    }
+
+    .search-form button {
+        height: 40px;
+        font-size: 16px;
+        margin-left: 10px;
+    }
 </style>
-<div class="pagination-form">
-    <form method="get">
-        <label for="itemsPerPage">Items Per Page:</label>
-        <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
-            <option value="5" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '5') echo 'selected'; ?>>5</option>
-            <option value="10" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '10') echo 'selected'; ?>>10</option>
-            <option value="15" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '15') echo 'selected'; ?>>15</option>
-            <option value="20" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '20') echo 'selected'; ?>>20</option>
-        </select>
-    </form>
-</div>
 <table class="container">
+    <div class="search-form">
+        <form method="get">
+            <label for="search">Search:</label>
+            <input type="text" name="search" id="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="pagination-form">
+        <form method="get">
+            <label for="itemsPerPage">Items Per Page:</label>
+            <select name="itemsPerPage" id="itemsPerPage" onchange="this.form.submit()">
+                <option value="5" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '5') echo 'selected'; ?>>5</option>
+                <option value="10" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '10') echo 'selected'; ?>>10</option>
+                <option value="15" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '15') echo 'selected'; ?>>15</option>
+                <option value="20" <?php if (isset($_GET['itemsPerPage']) && $_GET['itemsPerPage'] === '20') echo 'selected'; ?>>20</option>
+            </select>
+        </form>
+    </div>
     <thead>
         <tr>
             <th>
@@ -219,8 +247,16 @@
             // Get the current page number from the query string
             $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
+            // Get the search query from the query string
+            $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+
+            // Filter the items based on the search query
+            $filteredItems = array_filter($items, function ($item) use ($searchQuery) {
+                return strpos(strtolower($item['nama']), strtolower($searchQuery)) !== false;
+            });
+
             // Calculate the total number of items and pages
-            $totalItems = count($items);
+            $totalItems = count($filteredItems);
             $totalPages = ceil($totalItems / $itemsPerPage);
 
             // Adjust the current page number if it exceeds the total number of pages
@@ -232,8 +268,8 @@
             $startIndex = ($currentPage - 1) * $itemsPerPage;
             $endIndex = min($startIndex + $itemsPerPage, $totalItems);
 
-            for ($i = $startIndex; $i < $endIndex; $i++) {
-                $item = $items[$i];
+            // Loop through the filtered items and display them
+            foreach (array_slice($filteredItems, $startIndex, $itemsPerPage) as $item) {
                 echo "<tr>";
                 echo "<td>" . $item['nama'] . "</td>";
                 echo "<td>Rp" . $item['harga'] . "</td>";
@@ -248,7 +284,7 @@
             echo "<div class='pagination'>";
             for ($page = 1; $page <= $totalPages; $page++) {
                 $isActive = ($page == $currentPage) ? 'active' : '';
-                echo "<a href='?page=" . $page . "&itemsPerPage=" . $itemsPerPage . "' class='" . $isActive . "'>" . $page . "</a>";
+                echo "<a href='?page=" . $page . "&itemsPerPage=" . $itemsPerPage . "&search=" . urlencode($searchQuery) . "' class='" . $isActive . "'>" . $page . "</a>";
             }
             echo "</div>";
         } else {

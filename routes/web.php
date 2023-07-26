@@ -45,6 +45,11 @@ Route::get(
     'App\Http\Controllers\GetController@getAllHistory'
 );
 
+Route::get(
+    '/logout',
+    'App\Http\Controllers\GetController@getLogout'
+);
+
 Route::post(
     '/process_register',
     'App\Http\Controllers\PostController@postUser'

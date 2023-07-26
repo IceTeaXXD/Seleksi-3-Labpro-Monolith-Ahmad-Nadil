@@ -39,4 +39,10 @@ class GetController extends BaseController
 
         return response()->json($history);
     }
+    
+    public function getLogout()
+    {
+        session()->flush();
+        return redirect('/');
+    }
 }

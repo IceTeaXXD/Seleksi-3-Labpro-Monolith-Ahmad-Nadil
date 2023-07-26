@@ -1,12 +1,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
     @import url(https://fonts.googleapis.com/css?family=Poppins:300);
+
     * {
         font-family: Poppins;
     }
+
     .navbar {
         z-index: 9999;
     }
+
     .navbar-nav>li>a {
         position: relative;
         padding-bottom: 5px;
@@ -35,18 +38,31 @@
                     <button class="navbar-toggle" data-target="#mobile_menu" data-toggle="collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                     <a href="/" class="navbar-brand">MONOLITH APP</a>
                 </div>
-
-                <div class="navbar-collapse collapse" id="mobile_menu">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/login">Sign In</a></li>
-                        <li><a href="/register">Sign Up</a></li>
-                        <li><a href="#">Sign Out</a></li>
-                        <li><a href="/catalog">Catalog</a></li>
-                        <li><a href="#">Purchase History</a></li>
-                    </ul>
-                </div>
-
+                <?php
+                // check if session username is set, if so, then display the navbar
+                if (session('username')) {
+                    echo '
+                    <div class="navbar-collapse collapse" id="mobile_menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/catalog">Catalog</a></li>
+                            <li><a href="#">Purchase History</a></li>
+                            <li><a href="/logout">Sign Out</a></li>
+                        </ul>
+                    </div>
+                    ';
+                } else {
+                    echo '
+                    <div class="navbar-collapse collapse" id="mobile_menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/login">Sign In</a></li>
+                            <li><a href="/register">Sign Up</a></li>
+                        </ul>
+                    </div>
+                    ';
+                }
+                ?>
             </div>
         </div>
     </div>

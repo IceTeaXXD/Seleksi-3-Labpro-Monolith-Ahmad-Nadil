@@ -8,6 +8,8 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Models\User;
 use App\Models\History;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PostController extends BaseController
 {
@@ -24,7 +26,7 @@ class PostController extends BaseController
 
         $user->save();
 
-        return response()->json($user);
+        return redirect('/login');
     }
 
     public function postHistory(Request $request)
@@ -52,8 +54,12 @@ class PostController extends BaseController
 
         if ($user) {
             if ($user->password == $password) {
-                // rout to home
-                return redirect('/');
+                // User credentials are valid, generate a new JWT token
+                $token = JWTAuth::fromUser($user);
+
+                // Return the token in the response
+                return redirect('/catalog')-> withCookie(cookie('token', $token, 60));
+                
             } else {
                 return response()->json(['message' => 'Password salah']);
             }

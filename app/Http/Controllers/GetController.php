@@ -8,6 +8,8 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Models\User;
 use App\Models\History;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class GetController extends BaseController
 {
@@ -44,6 +46,10 @@ class GetController extends BaseController
     public function getLogout()
     {
         session()->flush();
+
+        $token = JWTAuth::getToken();
+        JWTAuth::invalidate($token);
+
         return redirect('/');
     }
 }

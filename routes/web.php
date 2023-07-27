@@ -29,15 +29,15 @@ Route::get('/login', function () {
 
 Route::get('/catalog', function () {
     return view('catalog');
-});
+})->middleware('jwt.auth');
 
 Route::get('/purchase', function () {
     return view('purchase');
-});
+})->middleware('jwt.auth');
 
 Route::get('/history', function () {
     return view('history');
-});
+})->middleware('jwt.auth');
 
 Route::get(
     '/users',
@@ -62,4 +62,4 @@ Route::post(
 Route::post(
     '/process_purchase',
     'App\Http\Controllers\PostController@postPurchase'
-);
+)->middleware('jwt.auth');

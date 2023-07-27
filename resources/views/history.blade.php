@@ -221,18 +221,24 @@
         $startIndex = ($currentPage - 1) * $itemsPerPage;
         $endIndex = min($startIndex + $itemsPerPage, $totalItems);
 
-        // Loop through the items on this page
-        for ($i = $startIndex; $i < $endIndex; $i++) {
-            $item = $history[$i];
+        if ($totalItems == 0) {
             echo "<tr>";
-            echo "<td>" . $item->nama_barang . "</td>";
-            echo "<td>" . $item->jumlah_barang . "</td>";
-            echo "<td>Rp" . $item->total_harga . "</td>";
-            echo "<td>" . $item->created_at . "</td>";
+            echo "<td colspan='4'>No items found.</td>";
             echo "</tr>";
+        } else {
+            // Loop through the items on this page
+            for ($i = $startIndex; $i < $endIndex; $i++) {
+                $item = $history[$i];
+                echo "<tr>";
+                echo "<td>" . $item->nama_barang . "</td>";
+                echo "<td>" . $item->jumlah_barang . "</td>";
+                echo "<td>Rp" . $item->total_harga . "</td>";
+                echo "<td>" . $item->created_at . "</td>";
+                echo "</tr>";
+            }
+            echo "</tbody>";
+            echo "</table>";
         }
-        echo "</tbody>";
-        echo "</table>";
 
 
         // Pagination links

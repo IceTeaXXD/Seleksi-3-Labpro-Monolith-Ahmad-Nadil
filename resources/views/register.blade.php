@@ -197,6 +197,9 @@
                     Register
                 </button>
                 <p class="message">Already registered? <a href="/login">Sign In</a></p>
+                @error('register')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
             </form>
         </div>
     </div>

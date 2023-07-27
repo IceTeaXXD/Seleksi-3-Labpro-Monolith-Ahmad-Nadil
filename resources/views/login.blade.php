@@ -180,25 +180,24 @@
 </style>
 <html lang="en">
 
-<body>
-    <div class="login-page">
-        <div class="form">
-            <form method="post" action="/process_login">
-                @csrf
-                <h2></i> Login</h2>
-                <input type="text" placeholder="Username" name="username" required />
-                <input type="password" placeholder="Password" name="password" required />
-                <button type="submit" class="btn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    Sign in
-                </button>
-                <p class="message">Not registered? <a href="/register">Create an account</a></p>
-            </form>
-        </div>
-    </div>
-</body>
+<div class="form">
+    <form method="post" action="/process_login">
+        @csrf
+        <h2>Login</h2>
+        <input type="text" placeholder="Username" name="username" required />
+        <input type="password" placeholder="Password" name="password" required />
+        <button type="submit" class="btn">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Sign in
+        </button>
+        <p class="message">Not registered? <a href="/register">Create an account</a></p>
+        @error('login')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </form>
+</div>
 
 </html>

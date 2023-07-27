@@ -10,6 +10,7 @@ use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Hash;
 
 class PostController extends BaseController
 {
@@ -20,13 +21,18 @@ class PostController extends BaseController
         $user = new User;
 
         $user->username = $request->input('username');
-        $user->password = $request->input('password');
+        $user->password = Hash::make($request->input('password'));
         $user->name = $request->input('name');
         $user->email = $request->input('email');
 
-        $user->save();
+        $userExists = User::where('username', $user->username)->exists();
 
-        return redirect('/login');
+        if ($userExists) {
+            return redirect('/register')->withErrors(['register' => 'User already exists, try using a different username.']);
+        } else {
+            $user->save();
+            return redirect('/login');
+        }
     }
 
     public function postHistory(Request $request)
@@ -53,7 +59,7 @@ class PostController extends BaseController
         $user = User::where('username', $username)->first();
 
         if ($user) {
-            if ($user->password == $password) {
+            if (Hash::check($password, $user->password)) {
                 // User credentials are valid, generate a new JWT token
                 $token = JWTAuth::fromUser($user);
 
@@ -61,10 +67,10 @@ class PostController extends BaseController
                 return redirect('/catalog')-> withCookie(cookie('token', $token, 60));
                 
             } else {
-                return response()->json(['message' => 'Password salah']);
+                return redirect('/login')->withErrors(['login' => 'Invalid username or password.']);
             }
         } else {
-            return response()->json(['message' => 'Username tidak ditemukan']);
+            return redirect('/login')->withErrors(['login' => 'Invalid username or password.']);
         }
     }
 

@@ -1,4 +1,6 @@
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!DOCTYPE html>
 <style>
     @import url(https://fonts.googleapis.com/css?family=Poppins:300);
 
@@ -35,7 +37,7 @@
             <div class="col-lg-12">
 
                 <div class="navbar-header">
-                    <button class="navbar-toggle" data-target="#mobile_menu" data-toggle="collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                    <button class="navbar-toggle" data-target="#mobile_menu" data-toggle="collapse" aria-label="navbutton"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                     <a href="/" class="navbar-brand">MONOLITH APP</a>
                 </div>
                 <?php

@@ -1,7 +1,6 @@
 @include('navbar')
 <title>History</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r125/three.min.js"></script>
 <h1><span class="yellow">PURCHASE HISTORY</span></h1>
 <style>
     @charset "UTF-8";

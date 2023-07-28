@@ -1,5 +1,7 @@
 @include ('navbar')
 <title>Register</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r125/three.min.js"></script>
 <!DOCTYPE html>
 <style>
     @import url(https://fonts.googleapis.com/css?family=Poppins:300);

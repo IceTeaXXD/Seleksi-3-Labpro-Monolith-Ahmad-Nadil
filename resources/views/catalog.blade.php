@@ -1,5 +1,7 @@
 @include('navbar')
 <title>Catalog</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r125/three.min.js"></script>
 <h1><span class="yellow">CATALOG</span></h1>
 <style>
     @charset "UTF-8";

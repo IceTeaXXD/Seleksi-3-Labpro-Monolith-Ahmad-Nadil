@@ -98,7 +98,7 @@ $quantity = 1;
 if (isset($_GET['item_id'])) {
     $item_id = $_GET['item_id'];
 
-    $url = 'https://single-service-production.up.railway.app/barang/' . $item_id;
+    $url = env('BE_URL') . '/barang/' . $item_id;
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

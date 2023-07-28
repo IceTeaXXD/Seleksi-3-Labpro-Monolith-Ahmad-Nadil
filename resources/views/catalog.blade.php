@@ -229,7 +229,7 @@
         // Ensure the itemsPerPage value is within the allowed range
         $itemsPerPage = min(max($itemsPerPage, 1), $maxItemsPerPage);
 
-        $url = 'https://single-service-production.up.railway.app/barang';
+        $url = env('BE_URL') . '/barang';
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 

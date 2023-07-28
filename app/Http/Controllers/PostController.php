@@ -84,7 +84,7 @@ class PostController extends BaseController
         echo $quantity;
 
         // post the purchase request to the purchase service
-        $url = 'https://single-service-production.up.railway.app/buy';
+        $url = env('BE_URL') . '/buy';
 
         // set the post data in json format
         $data = array(

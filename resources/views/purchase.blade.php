@@ -1,6 +1,6 @@
 @include('navbar')
 <title>Purchase Details</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="width=device-width, initial-scale=1.0" name="viewport" content="purchase page">
 <h1><span class="yellow">Purchase Details</span></h1>
 <style>
     @charset "UTF-8";
@@ -118,7 +118,7 @@ if (isset($_GET['item_id'])) {
         echo "<tr><td><a>HARGA</a></td><td>Rp" . $item['harga'] . "</td></tr>";
         echo "<tr><td><a>STOK</a></td><td>" . $item['stok'] . "</td></tr>";
         echo "<tr><td><a>TOTAL HARGA</a></td><td id='total_harga'>Rp" . $item['harga'] . "</td></tr>";
-        echo "<tr><td><a>QUANTITY</a></td><td><input type='number' id='quantityInput' name='quantity' min='1' max='" . $item['stok'] . "' value='" . $quantity . "' required></td></tr>";
+        echo "<tr><td><label for='quantityInput'>QUANTITY</label></td><td><input type='number' id='quantityInput' name='quantity' min='1' max='" . $item['stok'] . "' value='" . $quantity . "' required></td></tr>";
         echo "</table>";
         echo "<script>";
         echo "var quantityInput = document.getElementById('quantityInput');"; // Give the input element an ID for easier access

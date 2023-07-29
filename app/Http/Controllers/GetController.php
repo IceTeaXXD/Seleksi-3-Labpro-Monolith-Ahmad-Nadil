@@ -28,20 +28,6 @@ class GetController extends BaseController
 
         return response()->json($history);
     }
-
-    public function getAllUser()
-    {
-        $user = User::all();
-
-        return response()->json($user);
-    }
-
-    public function getAllHistory()
-    {
-        $history = History::all();
-
-        return response()->json($history);
-    }
     
     public function getLogout()
     {

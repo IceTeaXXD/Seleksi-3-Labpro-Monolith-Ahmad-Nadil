@@ -40,11 +40,6 @@ Route::get('/history', function () {
 })->middleware('jwt.auth');
 
 Route::get(
-    '/users',
-    'App\Http\Controllers\GetController@getAllUser'
-);
-
-Route::get(
     '/logout',
     'App\Http\Controllers\GetController@getLogout'
 );

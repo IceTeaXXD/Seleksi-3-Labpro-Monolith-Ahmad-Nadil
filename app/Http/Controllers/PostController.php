@@ -52,15 +52,15 @@ class PostController extends BaseController
     public function postLogin(Request $request)
     {
         // set the session username
-        session(['username' => $request->input('username')]);
         $username = $request->input('username');
         $password = $request->input('password');
-
+        
         $user = User::where('username', $username)->first();
-
+        
         if ($user) {
             if (Hash::check($password, $user->password)) {
                 // User credentials are valid, generate a new JWT token
+                session(['username' => $request->input('username')]);
                 $token = JWTAuth::fromUser($user);
 
                 // Return the token in the response
